@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="log_tag_format_exception">Date Format Exception:</string>
+    <string name="log_tag_message">Easy date picker exception:</string>
+</resources>

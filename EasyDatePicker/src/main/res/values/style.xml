@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DefaultDatePickerStyle" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/dark_blue</item>
+        <item name="colorControlActivated">@color/red</item>
+        <item name="android:selectableItemBackgroundBorderless">@color/red</item>
+        <item name="colorControlHighlight">@color/red</item>
+        <item name="android:windowBackground">@color/dark_blue</item>
+        <item name="android:textColor">@color/grey_200</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimaryInverse">@color/white</item>
+        <item name="android:textColorSecondaryInverse">@color/dark_blue</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/positiveButton</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/negativeButton</item>
+    </style>
+
+    <style name="positiveButton" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:backgroundTint">@color/dark_blue</item>
+    </style>
+
+    <style name="negativeButton" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:backgroundTint">@android:color/transparent</item>
+    </style>
+
+</resources>
