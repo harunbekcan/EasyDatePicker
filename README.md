@@ -19,6 +19,6 @@ Add the dependency into you app level `build.gradle`
 
 ```
 dependencies {
-    implementation 'com.github.harunbekcan:EasyDatePicker:1.0'
+    implementation 'com.github.harunbekcan:EasyDatePicker:VersionName'
 }
 ```
