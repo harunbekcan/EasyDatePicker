@@ -2,64 +2,85 @@ package com.harunbekcan.easydatepicker
 
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.content.Context
-import android.util.Log
-import com.harunbekcan.easydatepicker.Constants.DATE_FORMAT
+import android.widget.EditText
+import androidx.lifecycle.MutableLiveData
 import java.text.SimpleDateFormat
 import java.util.*
 
-class EasyDatePicker(
-    private val activity: Activity,
-    private var style: Int = R.style.DefaultDatePickerStyle,
-    private var pattern:String = DATE_FORMAT,
-    private var listener: DateSelectListener? = null
-) {
+class EasyDatePicker(private val activity: Activity) {
 
-    fun setDatePickerStyle(style:Int):EasyDatePicker{
+    private var style: Int? = null
+    private var formatType: String? = null
+    private var listener: MutableLiveData<String>? = null
+    private var editText: EditText? = null
+    private var minDate: Calendar? = null
+    private lateinit var date: Calendar
+
+    fun setDatePickerStyle(style: Int): EasyDatePicker {
         this.style = style
         return this
     }
 
-    fun setListener(listener: DateSelectListener):EasyDatePicker{
+    fun setListener(listener: MutableLiveData<String>?): EasyDatePicker {
         this.listener = listener
         return this
     }
 
-    fun setFormatType(type:String):EasyDatePicker{
-        this.pattern = type
+    fun setFormatType(type: String): EasyDatePicker {
+        this.formatType = type
         return this
     }
 
-    fun show(context: Context){
-        val calendar = Calendar.getInstance()
+    fun setDate(date: Calendar): EasyDatePicker {
+        this.date = date
+        return this
+    }
 
-        val year = calendar.get(Calendar.YEAR) // Current Year
-        val month = calendar.get(Calendar.MONTH) // Current Month
-        val day = calendar.get(Calendar.DAY_OF_MONTH) // Current Day
+    fun setMinDate(minDate: Calendar): EasyDatePicker {
+        this.minDate = minDate
+        return this
+    }
 
-        val datePicker = DatePickerDialog(
-            this.activity, this.style,
-            { _, year, month, dayOfMonth ->
+    fun setEditText(editText: EditText): EasyDatePicker {
+        this.editText = editText
+        return this
+    }
 
-                val formatDate = SimpleDateFormat(pattern, Locale.getDefault())
-
-                calendar.set(Calendar.YEAR, year)
-                calendar.set(Calendar.MONTH, month)
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-                try {
-                    val formattedDate = formatDate.format(calendar.time)
-                    listener?.isSelected(formattedDate)
-                }catch (e:Exception){
-                    Log.e(context.getString(R.string.log_tag_format_exception),"${e.message}")
-                }
-
-            }, year, month, day
-        )
-        try {
-            datePicker.show()
-        }catch (e: Exception){
-            Log.d(context.getString(R.string.log_tag_message), "${e.message}")
+    fun show() {
+        val dpd = DatePickerDialog(
+                this.activity, this.style ?: R.style.DefaultDatePickerStyle,
+                { _, year, monthOfYear, dayOfMonth ->
+                    setCalendarInfo(date, year, monthOfYear, dayOfMonth)
+                    updateDialogView(
+                        date = date,
+                        datePickerEditText = editText
+                    )
+                },
+                date.get(Calendar.YEAR),
+                date.get(Calendar.MONTH),
+                date.get(Calendar.DAY_OF_MONTH)
+            )
+        minDate?.let {
+            val sdf = SimpleDateFormat(formatType, Locale.US)
+            dpd.datePicker.minDate = it.timeInMillis
+            editText?.text?.clear()
+            listener?.value = sdf.format(date.time)
         }
+        dpd.show()
+    }
+
+    private fun updateDialogView(
+        date: Calendar,
+        datePickerEditText: EditText? = null
+    ) {
+        val sdf = SimpleDateFormat(formatType, Locale.US)
+        datePickerEditText?.setText(sdf.format(date.time))
+        listener?.value = sdf.format(date.time)
+    }
+
+    private fun setCalendarInfo(calendar: Calendar, year: Int, month: Int, day: Int) {
+        calendar.set(Calendar.YEAR, year)
+        calendar.set(Calendar.MONTH, month)
+        calendar.set(Calendar.DAY_OF_MONTH, day)
     }
 }

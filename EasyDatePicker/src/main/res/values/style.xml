@@ -11,7 +11,7 @@
         <item name="android:textColorSecondary">@color/white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/white</item>
-        <item name="android:textColorSecondaryInverse">@color/dark_blue</item>
+        <item name="android:textColorSecondaryInverse">@color/white</item>
         <item name="android:buttonBarPositiveButtonStyle">@style/positiveButton</item>
         <item name="android:buttonBarNegativeButtonStyle">@style/negativeButton</item>
     </style>
