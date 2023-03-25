@@ -22,3 +22,18 @@ dependencies {
     implementation 'com.github.harunbekcan:EasyDatePicker:VersionName'
 }
 ```
+## Usage
+
+```
+private var startDate = Calendar.getInstance()
+private val startDateListener = MutableLiveData<String>()
+```
+```
+EasyDatePicker(this)
+            .setDate(startDate)
+            .setDatePickerStyle(R.style.StyleExample)
+            .setFormatType(DATE_FORMAT)
+            .setListener(startDateListener)
+            .setEditText(findViewById(R.id.startDateEditText))
+            .show()
+```
