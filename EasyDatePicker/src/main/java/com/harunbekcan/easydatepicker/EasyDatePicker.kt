@@ -51,10 +51,7 @@ class EasyDatePicker(private val activity: Activity) {
                 this.activity, this.style ?: R.style.DefaultDatePickerStyle,
                 { _, year, monthOfYear, dayOfMonth ->
                     setCalendarInfo(date, year, monthOfYear, dayOfMonth)
-                    updateDialogView(
-                        date = date,
-                        datePickerEditText = editText
-                    )
+                    updateDialogView(date = date, datePickerEditText = editText)
                 },
                 date.get(Calendar.YEAR),
                 date.get(Calendar.MONTH),
